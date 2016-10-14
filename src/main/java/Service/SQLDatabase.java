@@ -10,6 +10,7 @@ import java.sql.SQLException;
  * Created by ilmaz on 11.10.16.
  */
 public class SQLDatabase {
+    //ToDo: replace information
     private final static String DRIVER = "com.mysql.jdbc.Driver";
     private final static String CONNECTION_URI = "jdbc:mysql://127.0.0.1:3306/messanger";
     private final static String LOGIN = "messangeruser";

@@ -11,14 +11,18 @@
     <title>User Sheet</title>
 </head>
 <body>
-    <h1>${name}</h1>
-    <span>${city}</span>
-    <span>${gender}</span>
-    <form method="post" action="">
-        <input type="submit" name="button" value="logout">
-    </form>
-    <form method="post" action="">
-        <input type="submit" name="button" value="delete me">
-    </form>
+<h1>${name}</h1>
+<p>
+    <span>${city}   </span>
+    <span>${weather}</span>
+</p>
+
+<span>${gender}</span>
+<form method="post" action="">
+    <input type="submit" name="button" value="logout">
+</form>
+<form method="post" action="">
+    <input type="submit" name="button" value="delete me">
+</form>
 </body>
 </html>

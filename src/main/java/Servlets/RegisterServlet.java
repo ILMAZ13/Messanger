@@ -20,7 +20,7 @@ import java.io.IOException;
  */
 @WebServlet("/registration")
 public class RegisterServlet extends HttpServlet {
-    private static String[] COUNTRIES = {"Russia", "London", "USA", "Germany", "Franch"};
+    private static String[] COUNTRIES = {"Kazan", "London", "Moscow", "Berlin", "Paris"};
     private String email;
     private String fname;
     private String sname;

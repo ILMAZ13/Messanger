@@ -4,6 +4,7 @@ import Entities.User;
 import Exceptions.DBException;
 import Interfaces.UserRepository;
 import Repositories.sqlUserRepository;
+import Service.WeatherAPI;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +29,7 @@ public class UserServlet extends HttpServlet {
             req.setAttribute("name", user.getName());
             req.setAttribute("gender", user.isMale() ? "Male" : "Female");
             req.setAttribute("city", user.getCity());
+            req.setAttribute("weather", WeatherAPI.getTemperature(user.getCity()));
             req.getRequestDispatcher("/WEB-INF/Views/User.jsp").forward(req, resp);
         }
 
