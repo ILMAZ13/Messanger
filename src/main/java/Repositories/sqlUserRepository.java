@@ -57,7 +57,8 @@ public class sqlUserRepository implements UserRepository {
                                 resultSet.getString("name"),
                                 resultSet.getString("city"),
                                 resultSet.getInt("is_male") == 1,
-                                resultSet.getString("password")
+                                resultSet.getString("password"),
+                                resultSet.getString("f_singer")
                         );
                         return user;
                     }
@@ -109,5 +110,29 @@ public class sqlUserRepository implements UserRepository {
             e.printStackTrace();
             throw new DBException();
         }
+    }
+
+    @Override
+    public boolean updateUser(User user) throws DBException {
+        Connection conn = SQLDatabase.getConnection();
+        //ToDo: replace to get code from documentation
+        if(containsUser(user)) {
+            try {
+                PreparedStatement st = conn.prepareStatement("UPDATE users SET name=?, password=?, is_male=?, city=?, f_singer=? WHERE email=?");
+                int i = 1;
+                st.setString(i++, user.getName());
+                st.setString(i++, user.getPassword());
+                st.setInt(i++, user.isMale() ? 1 : 0);
+                st.setString(i++, user.getCity());
+                st.setString(i++, user.getfSinger());
+                st.setString(i++, user.getEmail());
+                st.execute();
+                return true;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                throw new DBException();
+            }
+        }
+        return false;
     }
 }

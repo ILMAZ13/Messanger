@@ -16,7 +16,15 @@
     <span>${city}   </span>
     <span>${weather}</span>
 </p>
-
+<p>
+    <span>${singer}</span>
+    <span>  ${listeners}</span>
+</p>
+<form method="post" action="">
+    <span>Change/set favourite singer</span>
+    <input type="text" name="ch_singer">
+    <input type="submit" name="button" value="set/change">
+</form>
 <span>${gender}</span>
 <form method="post" action="">
     <input type="submit" name="button" value="logout">

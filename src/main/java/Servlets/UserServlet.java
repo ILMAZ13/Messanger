@@ -4,6 +4,7 @@ import Entities.User;
 import Exceptions.DBException;
 import Interfaces.UserRepository;
 import Repositories.sqlUserRepository;
+import Service.LastFmAPI;
 import Service.WeatherAPI;
 
 import javax.servlet.ServletException;
@@ -26,11 +27,9 @@ public class UserServlet extends HttpServlet {
         if(user == null){
             resp.sendRedirect("/login");
         } else {
-            req.setAttribute("name", user.getName());
-            req.setAttribute("gender", user.isMale() ? "Male" : "Female");
-            req.setAttribute("city", user.getCity());
-            req.setAttribute("weather", WeatherAPI.getTemperature(user.getCity()));
+            fillUserInformation(req, resp, user);
             req.getRequestDispatcher("/WEB-INF/Views/User.jsp").forward(req, resp);
+            String btnValue = req.getParameter("button");
         }
 
     }
@@ -60,6 +59,31 @@ public class UserServlet extends HttpServlet {
                     e.printStackTrace();
                 }
                 break;
+            case "set/change":
+                String singer = req.getParameter("ch_singer");
+                HttpSession session1 = req.getSession();
+                User user1 = (User) session1.getAttribute("user");
+                user1.setfSinger(singer);
+                UserRepository repository1 = new sqlUserRepository();
+                try {
+                    repository1.updateUser(user1);
+                    doGet(req,resp);
+                } catch (DBException e) {
+                    e.printStackTrace();
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                }
+        }
+    }
+
+    private void fillUserInformation(HttpServletRequest req, HttpServletResponse resp, User user){
+        req.setAttribute("name", user.getName());
+        req.setAttribute("gender", user.isMale() ? "Male" : "Female");
+        req.setAttribute("city", user.getCity());
+        req.setAttribute("weather", WeatherAPI.getTemperature(user.getCity()));
+        if(user.getfSinger() != null) {
+            req.setAttribute("singer", user.getfSinger());
+            req.setAttribute("listeners", LastFmAPI.getListenersCount(user.getfSinger()));
         }
     }
 

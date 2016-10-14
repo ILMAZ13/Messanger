@@ -9,6 +9,7 @@ public class User {
     private String city;
     private boolean isMale;
     private String password;
+    private String fSinger;
 
     public String getEmail() {
         return email;
@@ -20,6 +21,15 @@ public class User {
         this.city = city;
         this.isMale = isMale;
         this.password = password;
+    }
+
+    public User(String email, String name, String city, boolean isMale, String password, String fSinger) {
+        this.email = email;
+        this.name = name;
+        this.city = city;
+        this.isMale = isMale;
+        this.password = password;
+        this.fSinger = fSinger;
     }
 
     public String getName() {
@@ -36,6 +46,14 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getfSinger() {
+        return fSinger;
+    }
+
+    public void setfSinger(String fSinger) {
+        this.fSinger = fSinger;
     }
 
     @Override
