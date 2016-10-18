@@ -57,8 +57,74 @@
         <span style="color:red">${errcountry}</span>
     </p>
     <p>
-        <input type="submit" value="Submit">
+        <input type="button" value="Submit" onclick="validate(this.form)">
     </p>
 </form>
+
+<script>
+    function showError(container, errorMessage) {
+        container.className = 'error';
+        var msgElem = document.createElement('span');
+        msgElem.className = "error-message";
+        msgElem.innerHTML = errorMessage;
+        container.appendChild(msgElem);
+    }
+
+    function resetError(container) {
+        container.className = 'error';
+        if (container.lastChild.className == "error-message") {
+            container.removeChild(container.lastChild);
+        }
+    }
+
+    function validate(form) {
+        var elems = form.elements;
+        var regName = new RegExp("^[A-Za-zА-Яа-я]{2,20}");
+        var regPassword = new RegExp("^[A-Za-z0-9]{6,60}");
+        var regEmail = new RegExp("^[-a-z0-9!#$%&'*+/=?^_`{|}~]+" +
+                "(\\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\\.)*" +
+                "([a-z]+)$");
+        var f = new Boolean(true);
+
+        resetError(elems.email.parentNode);
+        if (!regEmail.test(elems.email.value)) {
+            showError(elems.email.parentNode, ' Некорректный адрес почты');
+            f = false;
+        }
+
+        resetError(elems.fname.parentNode);
+        if (!regName.test(elems.fname.value)) {
+            showError(elems.fname.parentNode, ' Некорректное имя');
+            f = false;
+        }
+
+        resetError(elems.sname.parentNode);
+        if (!regName.test(elems.sname.value)) {
+            showError(elems.sname.parentNode, ' Некорректная фамилия');
+            f = false;
+        }
+
+        resetError(elems.password.parentNode);
+        if (!regPassword.test(elems.password.value)) {
+            showError(elems.password.parentNode, ' Укажите пароль.');
+            f = false;
+        } else if (elems.password.value != elems.repassword.value) {
+            showError(elems.password.parentNode, ' Пароли не совпадают.');
+            f = false;
+        }
+
+        resetError(elems.country.parentNode);
+        if (!elems.country.value || elems.country.value === "null") {
+            showError(elems.country.parentNode, ' Укажите ваш город');
+            f = false;
+        }
+        if (!elems.gender.value) {
+            f = false;
+        }
+        if (f) {
+            form.submit();
+        }
+    }
+</script>
 </body>
 </html>
