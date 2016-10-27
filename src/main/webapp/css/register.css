@@ -1,0 +1,16 @@
+
+.register-form{
+    width: 400px;
+    margin: 0 auto;
+}
+.login-form{
+    width: 300px;
+    margin: 0 auto;
+}
+.error{
+    color: red;
+    position: fixed;
+    margin-left: 200px;
+    width: 200px;
+    border: solid red 1px;
+}

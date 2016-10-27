@@ -12,7 +12,7 @@ import java.util.List;
 public interface UserRepository {
     boolean addUser(User user) throws DBException, AlreadyExistException;
     User findByEmail(String email, String password) throws DBException;
-    List<User> getUsersList();
+    List<User> getUsersList() throws DBException;
     boolean containsUser(User user) throws DBException;
     boolean delUser(String email, String password) throws DBException;
     boolean updateUser(User user) throws DBException;

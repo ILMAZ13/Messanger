@@ -4,6 +4,7 @@ package Entities;
  * Created by ilmaz on 28.09.16.
  */
 public class User {
+    private int id;
     private String email;
     private String name;
     private String city;
@@ -23,7 +24,8 @@ public class User {
         this.password = password;
     }
 
-    public User(String email, String name, String city, boolean isMale, String password, String fSinger) {
+    public User(int id, String email, String name, String city, boolean isMale, String password, String fSinger) {
+        this.id = id;
         this.email = email;
         this.name = name;
         this.city = city;

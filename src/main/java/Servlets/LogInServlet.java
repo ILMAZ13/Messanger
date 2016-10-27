@@ -23,7 +23,7 @@ public class LogInServlet extends HttpServlet {
         if(user != null){
             resp.sendRedirect("/user");
         } else {
-            req.getRequestDispatcher("/WEB-INF/Views/LogIn.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/LogIn.jsp").forward(req, resp);
         }
     }
 

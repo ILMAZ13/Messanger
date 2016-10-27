@@ -25,10 +25,10 @@ public class UserServlet extends HttpServlet {
         HttpSession session =  req.getSession();
         User user = (User) session.getAttribute("user");
         if(user == null){
-            resp.sendRedirect("/login");
+            resp.sendRedirect("/main");
         } else {
             fillUserInformation(req, resp, user);
-            req.getRequestDispatcher("/WEB-INF/Views/User.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/User.jsp").forward(req, resp);
             String btnValue = req.getParameter("button");
         }
 
@@ -44,7 +44,7 @@ public class UserServlet extends HttpServlet {
         switch (textFromButton){
             case "logout":
                 req.getSession().setAttribute("user", null);
-                resp.sendRedirect("/login");
+                resp.sendRedirect("/main");
                 break;
             case "delete me":
                 HttpSession session = req.getSession();
@@ -53,7 +53,7 @@ public class UserServlet extends HttpServlet {
                 try {
                     repository.delUser(user.getEmail(), user.getPassword());
                     req.getSession().setAttribute("user", null);
-                    resp.sendRedirect("/login");
+                    resp.sendRedirect("/main");
                 } catch (DBException e) {
                     //ToDO: add reaction on error
                     e.printStackTrace();

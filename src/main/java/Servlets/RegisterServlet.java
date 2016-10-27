@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -32,9 +33,15 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("countries", COUNTRIES);
-        fillEnteredInformation(req);
-        req.getRequestDispatcher("/WEB-INF/Views/Register.jsp").forward(req, resp);
+        HttpSession session =  req.getSession();
+        User user = (User) session.getAttribute("user");
+        if(user != null){
+            resp.sendRedirect("/main");
+        } else {
+            req.setAttribute("countries", COUNTRIES);
+            fillEnteredInformation(req);
+            req.getRequestDispatcher("/WEB-INF/views/Register.jsp").forward(req, resp);
+        }
     }
 
     @Override
@@ -42,7 +49,6 @@ public class RegisterServlet extends HttpServlet {
         email=req.getParameter("email");
         fname=req.getParameter("fname");
         sname=req.getParameter("sname");
-        about=req.getParameter("about");
         password=req.getParameter("password");
         repassword=req.getParameter("repassword");
         gender=req.getParameter("gender");
@@ -102,7 +108,7 @@ public class RegisterServlet extends HttpServlet {
         if(f){
             try {
                 addUser(req);
-                resp.sendRedirect("/user");
+                resp.sendRedirect("/login");
             } catch (DBException e) {
                 e.printStackTrace();
                 doGet(req,resp);
@@ -133,6 +139,5 @@ public class RegisterServlet extends HttpServlet {
         UserRepository repository = new sqlUserRepository();
         User user = new User(email, fname+" "+sname, country, gender.equals("M"), Encryptor.getHash(password,email));
         repository.addUser(user);
-        req.getSession().setAttribute("user", user);
     }
 }

@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -53,6 +54,7 @@ public class sqlUserRepository implements UserRepository {
                 if(resultSet.next()){
                     if(resultSet.getString("password").equals(Encryptor.getHash(password, email))) {
                         User user = new User(
+                                resultSet.getInt("id"),
                                 resultSet.getString("email"),
                                 resultSet.getString("name"),
                                 resultSet.getString("city"),
@@ -72,7 +74,31 @@ public class sqlUserRepository implements UserRepository {
     }
 
     @Override
-    public List<User> getUsersList() {
+    public List<User> getUsersList() throws DBException {
+        Connection conn = SQLDatabase.getConnection();
+        try {
+            PreparedStatement st= conn.prepareStatement("SELECT * FROM users");
+            ResultSet resultSet = st.executeQuery();
+            List<User> userList = new LinkedList<>();
+            if(resultSet != null){
+                while (resultSet.next()){
+                    User user = new User(
+                            resultSet.getInt("id"),
+                            resultSet.getString("email"),
+                            resultSet.getString("name"),
+                            resultSet.getString("city"),
+                            resultSet.getInt("is_male") == 1,
+                            resultSet.getString("password"),
+                            resultSet.getString("f_singer")
+                    );
+                    userList.add(user);
+                }
+                return userList;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DBException();
+        }
         return null;
     }
 
