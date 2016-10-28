@@ -17,13 +17,12 @@ import java.io.IOException;
 public class MainPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session =  req.getSession();
+        HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        if(user != null){
-            resp.sendRedirect("/user");
-        } else {
-            req.getRequestDispatcher("/WEB-INF/views/main_page.jsp").forward(req, resp);
+        if (user != null) {
+            req.setAttribute("user", user);
         }
+        req.getRequestDispatcher("/WEB-INF/views/MainPage.jsp").forward(req, resp);
     }
 
     @Override

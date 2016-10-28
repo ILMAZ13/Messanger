@@ -44,7 +44,7 @@ public class WeatherAPI {
             JSONObject obj = (JSONObject) list.get(0);
             JSONObject main = (JSONObject) obj.get("main");
             temp = main.get("temp").toString();
-            return temp + "C";
+            return temp + "°C";
         } catch (NullPointerException e) {
             e.printStackTrace();
         }catch (MalformedURLException e) {

@@ -3,7 +3,7 @@ package Servlets;
 import Entities.User;
 import Exceptions.DBException;
 import Interfaces.UserRepository;
-import Repositories.sqlUserRepository;
+import Repositories.SqlUserRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,7 +52,7 @@ public class LogInServlet extends HttpServlet {
     }
 
     private User getUser(String email, String password) throws DBException {
-        UserRepository repository = new sqlUserRepository();
+        UserRepository repository = new SqlUserRepository();
         return repository.findByEmail(email, password);
     }
 }

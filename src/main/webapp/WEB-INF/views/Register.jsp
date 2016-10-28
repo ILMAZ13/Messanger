@@ -11,70 +11,87 @@
 <head>
     <title>Registration</title>
     <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/register.css"/>">
+    <link rel="stylesheet" href="<c:url value="/css/normalize.css"/>">
+    <link rel="stylesheet" href="<c:url value="/css/main_page.css"/>">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/js/validation.js"></script>
 </head>
 <body>
-<div class="register-form">
-    <h1>Registration</h1>
-    <form class="register-form" method="post" action="">
-        <p>
-            <span>Email:</span>
-            <input class="form-control input-field" type="email" name="email" value="${email}"
-                   placeholder="Введите свой email">
-            <span style="color:red">${erremail}</span>
-        </p>
-        <p>
-            <span>First name:</span>
-            <input type="text" name="fname" value="${fname}" class="form-control input-field" placeholder="Имя">
-            <span style="color:red">${errfname}</span>
-        </p>
-        <p>
-            <span>Second name:</span>
-            <input type="text" name="sname" value="${sname}" class="form-control input-field" placeholder="Фамилия">
-            <span style="color:red">${errsname}</span>
-        </p>
-        <p>
-            <span>Password:</span><input type="password" name="password" class="form-control input-field"
-                                         placeholder="Больше 6 символов">
-            <span style="color:red">${errpassword}</span>
-        </p>
-        <p>
-            <span>Repeat password</span><input type="password" name="repassword" class="form-control input-field"
-                                               placeholder="Повторите ваш пароль">
-            <span style="color:red">${errrepassword}</span></p>
-        <p>
-            <span>Gender:</span>
-            <input type="radio" name="gender" value="M"
-                   <c:if test="${gender eq 'M'}">checked</c:if> >
-            <span>M   </span>
-            <input type="radio" name="gender" value="F"
-                   <c:if test="${gender eq 'F'}">checked</c:if> >
-            <span>F</span>
-            <span style="color:red">${errgender}</span>
-        </p>
-        <p>
-            <span>Country:</span>
-        </p>
-        <p>
-            <select name="country" class="form-control">
-                <option value="null">Choose you country</option>
-                <c:forEach var="k" items="${countries}">
-                    <option value=${k}      <c:if test="${k eq country}">selected</c:if>        >${k}</option>
-                </c:forEach>
-            </select>
-            <span style="color:red">${errcountry}</span>
-        </p>
-        <p>
-            <input type="submit" value="Submit" onclick="validate(this.form)">
-        </p>
-    </form>
+<div class="w-nav navigation-bar" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
+    <div class="w-container">
+        <a class="w-nav-brand w--current brand-link" href="/">
+            <h1 class="brand-text">Ilcom-messages</h1>
+        </a>
+    </div>
+</div>
+<div class="w-section register-section centered wf-affected wf-selected">
+    <div class="w-container">
+        <h1 class="hero-heading">Registration</h1>
+        <form class="register-form" method="post" action="">
+            <p>
+                <label>Email:</label>
+                <input class="form-control input-field" type="email" name="email" value="${email}"
+                       placeholder="Введите свой email">
+                <span class="error">${erremail}</span>
+            </p>
+            <p>
+                <label>First name:</label>
+                <input type="text" name="fname" value="${fname}" class="form-control input-field" placeholder="Имя">
+                <span class="error">${errfname}</span>
+            </p>
+            <p>
+                <label>Second name:</label>
+                <input type="text" name="sname" value="${sname}" class="form-control input-field" placeholder="Фамилия">
+                <span class="error">${errsname}</span>
+            </p>
+            <p>
+                <label>Password:</label><input type="password" name="password" class="form-control input-field"
+                                               placeholder="Больше 6 символов">
+                <span class="error">${errpassword}</span>
+            </p>
+            <p>
+                <label>Repeat password:</label><input type="password" name="repassword" class="form-control input-field"
+                                                     placeholder="Повторите ваш пароль">
+                <span class="error">${errrepassword}</span></p>
+            <p>
+                <label>Sex:</label>
+            </p>
+            <p>
+                <input type="radio" name="gender" value="M"
+                       <c:if test="${gender eq 'M'}">checked</c:if> >
+                <label>M </label>
+                <input type="radio" name="gender" value="F"
+                       <c:if test="${gender eq 'F'}">checked</c:if> >
+                <label>F</label>
+                <span class="error">${errgender}</span>
+            </p>
+            <p>
+                <label>Country:</label>
+            </p>
+            <p>
+                <select name="country" class="form-control">
+                    <option value="null">Choose you country</option>
+                    <c:forEach var="k" items="${countries}">
+                        <option value=${k}      <c:if test="${k eq country}">selected</c:if>        >${k}</option>
+                    </c:forEach>
+                </select>
+                <span class="error">${errcountry}</span>
+            </p>
+            <p>
+                <input type="submit" value="Submit" class="button" onclick="validate(this.form)">
+            </p>
+        </form>
+    </div>
+</div>
+<div class="w-section footer center">
+    <div class="w-container">
+        <div class="footer-text">© 2016, ILMAZ, Inc. All Rights Reserved.</div>
+    </div>
 </div>
 <script>
     function showError(container, errorMessage) {
         container.className = '';
-        var msgElem = document.createElement('span');
+        var msgElem = document.createElement('label');
         msgElem.className = "error";
         msgElem.innerHTML = errorMessage;
         container.appendChild(msgElem);

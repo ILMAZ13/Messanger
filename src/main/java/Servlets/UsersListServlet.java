@@ -3,7 +3,7 @@ package Servlets;
 import Entities.User;
 import Exceptions.DBException;
 import Interfaces.UserRepository;
-import Repositories.sqlUserRepository;
+import Repositories.SqlUserRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,13 +42,11 @@ public class UsersListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email");
-        req.setAttribute("test", email);
-        req.getRequestDispatcher("/WEB-INF/views/UsersList.jsp").forward(req, resp);
+        doGet(req,resp);
     }
 
     private List<User> getAllUsers() throws DBException {
-        UserRepository repository = new sqlUserRepository();
+        UserRepository repository = new SqlUserRepository();
         return repository.getUsersList();
     }
 }

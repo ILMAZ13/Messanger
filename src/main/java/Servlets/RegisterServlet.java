@@ -4,7 +4,7 @@ import Entities.User;
 import Exceptions.AlreadyExistException;
 import Exceptions.DBException;
 import Interfaces.UserRepository;
-import Repositories.sqlUserRepository;
+import Repositories.SqlUserRepository;
 import Service.Encryptor;
 import Service.RegularExpressionTester;
 
@@ -36,7 +36,7 @@ public class RegisterServlet extends HttpServlet {
         HttpSession session =  req.getSession();
         User user = (User) session.getAttribute("user");
         if(user != null){
-            resp.sendRedirect("/main");
+            resp.sendRedirect("/user");
         } else {
             req.setAttribute("countries", COUNTRIES);
             fillEnteredInformation(req);
@@ -136,7 +136,7 @@ public class RegisterServlet extends HttpServlet {
     }
 
     private void addUser(HttpServletRequest req) throws DBException, AlreadyExistException {
-        UserRepository repository = new sqlUserRepository();
+        UserRepository repository = new SqlUserRepository();
         User user = new User(email, fname+" "+sname, country, gender.equals("M"), Encryptor.getHash(password,email));
         repository.addUser(user);
     }

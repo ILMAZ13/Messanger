@@ -16,4 +16,6 @@ public interface UserRepository {
     boolean containsUser(User user) throws DBException;
     boolean delUser(String email, String password) throws DBException;
     boolean updateUser(User user) throws DBException;
+    int getIdByEmail(String email) throws DBException;
+    User getUserById(int id) throws DBException;
 }

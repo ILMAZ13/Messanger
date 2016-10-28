@@ -54,6 +54,10 @@ public class User {
         return fSinger;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setfSinger(String fSinger) {
         this.fSinger = fSinger;
     }

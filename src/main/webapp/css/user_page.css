@@ -1,0 +1,97 @@
+.hero-section.centered {
+    padding-top: 75px;
+    padding-bottom: 75px;
+    border-bottom-style: solid;
+    border-bottom-width: 4px;
+    border-bottom-color: rgb(105, 185, 255);
+    background-image: linear-gradient(rgba(46, 157, 255, 0.498039), rgba(46, 157, 255, 0.219608)), url('/images/user.jpg');
+    background-size: auto, cover;
+    text-align: center;
+    background-position: 0px 0px, 50% 50%;
+}
+.users-section.centered {
+    padding-top: 60px;
+    padding-bottom: 30px;
+    border-bottom-style: solid;
+    border-bottom-width: 4px;
+    border-bottom-color: rgb(105, 185, 255);
+    background-image: linear-gradient(rgba(46, 157, 255, 0.498039), rgba(46, 157, 255, 0.219608)), url(https://daks2k3a4ib2z.cloudfront.net/5812610cfe29520977a067ca/5812610dfe29520977a0681e_city-scape.jpg);
+    background-size: auto, cover;
+    text-align: center;
+    background-position: 0px 0px, 50% 50%;
+}
+.chat-section.centered {
+    padding-top: 195px;
+    padding-bottom: 195px;
+    border-bottom: 4px solid #69b9ff;
+    background-image: -webkit-linear-gradient(270deg, rgba(46, 157, 255, .5), rgba(46, 157, 255, .22)), url('/images/chat.jpg');
+    background-image: linear-gradient(180deg, rgba(46, 157, 255, .5), rgba(46, 157, 255, .22)), url('../images/chat.jpg');
+    background-position: 0px 0px, 50% 50%;
+    background-size: auto, cover;
+    text-align: center;
+}
+.message {
+    display: block;
+    margin: 5px;
+    padding: 15px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgb(105, 185, 255);
+    border-radius: 10px;
+    transition-property: background-color;
+    transition-duration: 300ms;
+    transition-timing-function: ease;
+}
+.person {
+    display: block;
+    margin: 5px;
+    padding: 15px;
+    padding-bottom: 35px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgb(105, 185, 255);
+    border-radius: 10px;
+    transition-property: background-color;
+    transition-duration: 300ms;
+    transition-timing-function: ease;
+}
+.opponent-name {
+    display: block;
+    float: left;
+    color: rgb(46, 157, 255);
+    font-size: 26px;
+}
+.message-text {
+    margin-top: 9px;
+    float: left;
+    color: rgba(0, 0, 0, 0.611765);
+    font-size: 20px;
+    text-transform: none;
+}
+.message-image {
+    position: static;
+    left: 0px;
+    top: 0px;
+    display: block;
+    width: 30px;
+    margin-top: 32px;
+    margin-right: 2px;
+    margin-bottom: -32px;
+    margin-left: -30px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    float: left;
+    clear: none;
+    background-size: cover;
+    overflow: visible;
+    background-position: 0px 0px;
+}
+.message-time {
+    margin-top: 8px;
+    margin-right: -12px;
+    margin-bottom: 0px;
+    float: right;
+    clear: none;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 15px;
+}

@@ -4,7 +4,6 @@ import Entities.User;
 import Exceptions.AlreadyExistException;
 import Exceptions.DBException;
 import Interfaces.UserRepository;
-import Service.Encryptor;
 import Service.SQLDatabase;
 
 import java.sql.Connection;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * Created by ilmaz on 10.10.16.
  */
-public class sqlUserRepository implements UserRepository {
+public class SqlUserRepository implements UserRepository {
 
     public boolean addUser(User user) throws DBException, AlreadyExistException {
         Connection conn = SQLDatabase.getConnection();
@@ -52,7 +51,7 @@ public class sqlUserRepository implements UserRepository {
             ResultSet resultSet = st.executeQuery();
             if(resultSet != null){
                 if(resultSet.next()){
-                    if(resultSet.getString("password").equals(Encryptor.getHash(password, email))) {
+//                    if(resultSet.getString("password").equals(Encryptor.getHash(password, email))) {
                         User user = new User(
                                 resultSet.getInt("id"),
                                 resultSet.getString("email"),
@@ -63,7 +62,7 @@ public class sqlUserRepository implements UserRepository {
                                 resultSet.getString("f_singer")
                         );
                         return user;
-                    }
+//                    }
                 }
             }
         } catch (SQLException e) {
@@ -160,5 +159,54 @@ public class sqlUserRepository implements UserRepository {
             }
         }
         return false;
+    }
+
+    @Override
+    public int getIdByEmail(String email) throws DBException {
+        Connection conn = SQLDatabase.getConnection();
+        try {
+            PreparedStatement st= conn.prepareStatement("SELECT * FROM users WHERE email=?");
+            int i = 1;
+            st.setString(i++, email);
+            ResultSet resultSet = st.executeQuery();
+            if(resultSet != null){
+                if(resultSet.next()){
+                    return resultSet.getInt("id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DBException();
+        }
+        return -1;
+    }
+
+    @Override
+    public User getUserById(int id) throws DBException {
+        Connection conn = SQLDatabase.getConnection();
+        try {
+            PreparedStatement st= conn.prepareStatement("SELECT * FROM users WHERE id=?");
+            int i = 1;
+            st.setInt(i++, id);
+            ResultSet resultSet = st.executeQuery();
+            if(resultSet != null){
+                if(resultSet.next()){
+                    User user = new User(
+                            resultSet.getInt("id"),
+                            resultSet.getString("email"),
+                            resultSet.getString("name"),
+                            resultSet.getString("city"),
+                            resultSet.getInt("is_male") == 1,
+                            resultSet.getString("password"),
+                            resultSet.getString("f_singer")
+                    );
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DBException();
+        }
+        return null;
     }
 }

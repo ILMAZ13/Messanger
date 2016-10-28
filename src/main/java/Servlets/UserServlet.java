@@ -1,10 +1,11 @@
 package Servlets;
 
+import Entities.Message;
 import Entities.User;
 import Exceptions.DBException;
 import Interfaces.UserRepository;
-import Repositories.sqlUserRepository;
-import Service.LastFmAPI;
+import Repositories.SqlMessageRepository;
+import Repositories.SqlUserRepository;
 import Service.WeatherAPI;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by ilmaz on 28.09.16.
@@ -29,7 +31,6 @@ public class UserServlet extends HttpServlet {
         } else {
             fillUserInformation(req, resp, user);
             req.getRequestDispatcher("/WEB-INF/views/User.jsp").forward(req, resp);
-            String btnValue = req.getParameter("button");
         }
 
     }
@@ -49,7 +50,7 @@ public class UserServlet extends HttpServlet {
             case "delete me":
                 HttpSession session = req.getSession();
                 User user = (User) session.getAttribute("user");
-                UserRepository repository = new sqlUserRepository();
+                UserRepository repository = new SqlUserRepository();
                 try {
                     repository.delUser(user.getEmail(), user.getPassword());
                     req.getSession().setAttribute("user", null);
@@ -64,7 +65,7 @@ public class UserServlet extends HttpServlet {
                 HttpSession session1 = req.getSession();
                 User user1 = (User) session1.getAttribute("user");
                 user1.setfSinger(singer);
-                UserRepository repository1 = new sqlUserRepository();
+                UserRepository repository1 = new SqlUserRepository();
                 try {
                     repository1.updateUser(user1);
                     doGet(req,resp);
@@ -81,10 +82,21 @@ public class UserServlet extends HttpServlet {
         req.setAttribute("gender", user.isMale() ? "Male" : "Female");
         req.setAttribute("city", user.getCity());
         req.setAttribute("weather", WeatherAPI.getTemperature(user.getCity()));
-        if(user.getfSinger() != null) {
-            req.setAttribute("singer", user.getfSinger());
-            req.setAttribute("listeners", LastFmAPI.getListenersCount(user.getfSinger()));
+        try {
+            List<Message> messages = getLastMessages(user.getId());
+            req.setAttribute("messages", messages);
+        } catch (DBException e) {
+            e.printStackTrace();
         }
+//        if(user.getfSinger() != null) {
+//            req.setAttribute("singer", user.getfSinger());
+//            req.setAttribute("listeners", LastFmAPI.getListenersCount(user.getfSinger()));
+//        }
+    }
+
+    private List<Message> getLastMessages(int id) throws DBException {
+        SqlMessageRepository repository = new SqlMessageRepository();
+        return repository.findLastMessagesBySenderId(id);
     }
 
 }

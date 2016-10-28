@@ -30,22 +30,6 @@ $(document).ready(function () {
             }, interval)
         }
 
-
-        function isValidEmailAddress(emailAddress) {
-            var pattern = new RegExp(/^(?:[a-zA-Z0-9\._])+@(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z0-9\-]+$/i);
-            return pattern.test(emailAddress);
-        }
-
-        function checkOther(){
-            var email = $('input[name=email]').val()
-            if(!isValidEmailAddress(email)){
-
-                //ToDo: show message
-
-                return false
-            }
-        }
-
         form.submit(function() {
 
             addClassEmptyIfNoValue();
@@ -54,24 +38,7 @@ $(document).ready(function () {
             if(countOfEmptyFields > 0){
                 lightEmpty(600)
             } else {
-                var noErrors = false;
-
-                //ToDo: check other with regular expressions
-                var message = checkOther();
-                if(message == '') noErrors = true;
-
-                if(noErrors){
-                    $.ajax({
-                        url: "/register",
-                        type: "POST",
-                        data: {
-                            "email" : $('input[email=email]').val()
-
-                        }
-                    }).done(function (data) {
-                        alert(data)
-                    });
-                }
+               form.submit();
             }
 
             return false
